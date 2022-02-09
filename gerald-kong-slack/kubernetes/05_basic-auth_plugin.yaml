@@ -1,0 +1,33 @@
+# https://docs.konghq.com/hub/kong-inc/basic-auth/
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: basic-auth
+  namespace: helloworld
+plugin: basic-auth
+# config:
+#   hide_credentials: true
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  annotations:
+    # needed to bind this consumer to service/ingress
+    kubernetes.io/ingress.class: kong
+  name: basic-auth-consumer
+  namespace: helloworld
+username: basic-auth-user
+credentials:
+  - helloworld-basic-auth-creds
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helloworld-basic-auth-creds
+  namespace: helloworld
+stringData:
+  kongCredType: basic-auth
+  username: basic-auth-user
+  password: basic-auth-password
+#  group: acl-group
+---
