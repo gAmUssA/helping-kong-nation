@@ -2,8 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-#    konghq.com/plugins: basic-auth, acl
-    konghq.com/plugins: basic-auth
+    konghq.com/plugins: basic-auth, acl
+    #konghq.com/plugins: basic-auth
   labels:
     app: helloworld
   name: helloworld

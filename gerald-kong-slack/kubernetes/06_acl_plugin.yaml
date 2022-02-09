@@ -1,0 +1,39 @@
+# https://docs.konghq.com/hub/kong-inc/acl/
+apiVersion: configuration.konghq.com/v1
+kind: KongPlugin
+metadata:
+  name: acl
+  namespace: helloworld
+plugin: acl
+config:
+  # hide_groups_header: true
+  allow:
+    - basic-auth-user
+    - acl
+    - acl-consumer
+    - acl-group
+    - basic-auth-consumer
+    - allowed-testing-user
+    - basic-auth
+    - kong
+---
+apiVersion: configuration.konghq.com/v1
+kind: KongConsumer
+metadata:
+  name: acl-consumer
+  namespace: helloworld
+  annotations:
+    kubernetes.io/ingress.class: kong
+username: basic-auth-user
+credentials:
+  - helloworld-acl-creds
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helloworld-acl-creds
+  namespace: helloworld
+stringData:
+  kongCredType: acl
+  group: acl-group
+---

@@ -29,5 +29,5 @@ stringData:
   kongCredType: basic-auth
   username: basic-auth-user
   password: basic-auth-password
-#  group: acl-group
+  group: acl-group
 ---
